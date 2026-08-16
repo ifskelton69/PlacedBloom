@@ -42,7 +42,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center text-center mb-14">
           <div className="mb-10">
-            <button className="bg-gradient-to-r from-purple-600 to-indigo-500 text-white rounded-full py-2 px-4 flex items-center gap-2 shadow-lg hover:scale-105 transition">
+            <button className="bg-gradient-to-r from-purple-400 to-indigo-500 text-white rounded-full py-2 px-4 flex items-center gap-2 shadow-lg hover:scale-105 transition">
               <Sparkles className="h-4 w-4 animate-bounce" />
               <span>Land into your dream job</span>
             </button>
