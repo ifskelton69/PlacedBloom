@@ -1,23 +1,26 @@
-import express from "express"
-import dotenv from "dotenv"
-import userRoutes from "./routes/userRoutes.js"
-import cookieParser from "cookie-parser"
-import cors from "cors"
-dotenv.config()
-const PORT = process.env.PORT || 3000
-import axios from "axios"
-import connectDB from "./config/db.js"
+import express from "express";
+import dotenv from "dotenv";
+import userRoutes from "./routes/userRoutes.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+dotenv.config();
+const PORT = process.env.PORT || 3000;
+import axios from "axios";
+import connectDB from "./config/db.js";
 
-connectDB()
+connectDB();
 
-const app = express()
+const app = express();
 
 // Change this origin when in production
 // app.use(cors({ origin: "https://dev-clash-flax.vercel.app"})) // for production
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://dev-clash-flax.vercel.app",
+];
 
 // app.use(cors({ origin: "http://localhost:5173"}, )) // for Localhost
-
 
 // app.use(cors({
 //   origin: "https://dev-clash-flax.vercel.app/",
@@ -26,7 +29,7 @@ const app = express()
 //   allowedHeaders: ["Content-Type", "Authorization"] // Include necessary headers
 // }))
 
-app.use(cors());
+// app.use(cors());
 // app.use(cors({
 //   origin: "https://dev-clash-hackathon.vercel.app", // frontend domain
 //   credentials: true,
@@ -34,11 +37,18 @@ app.use(cors());
 //   allowedHeaders: ["Content-Type", "Authorization"]
 // }));
 
-app.use(express.json())
+app.use(express.json());
 
-app.use(cookieParser())
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 
-app.use("/api/users", userRoutes)
+app.use(cookieParser());
+
+app.use("/api/users", userRoutes);
 
 app.get("/job-recommendations", async (req, res) => {
   const url = "https://jsearch.p.rapidapi.com/search";
@@ -68,5 +78,5 @@ app.get("/job-recommendations", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Server listening on port: " + PORT)
-})
+  console.log("Server listening on port: " + PORT);
+});
